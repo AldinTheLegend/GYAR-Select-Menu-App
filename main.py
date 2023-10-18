@@ -10,6 +10,7 @@ class MyGUI:
         root = tk.Tk()
         root.title("")
         root.overrideredirect(True)
+        root.eval('tk::PlaceWindow . center')
 
         #font_path = os.getcwd() + "/avenir-heavy_QYJA9/Avenir Heavy.ttf"
         
