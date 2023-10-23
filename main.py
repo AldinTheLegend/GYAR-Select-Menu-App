@@ -1,23 +1,26 @@
 import tkinter as tk
 from tkinter import *
 import os
+import subprocess
 from PIL import Image, ImageFont, ImageDraw
 
-pathToGames = "/home/raspberry/Pictures" #C:\\Users\\aldin.jusufagic\\Pictures\\Saved Pictures
+pathToGames = "/home/raspberry/Downloads/ROMGames" #C:\\Users\\aldin.jusufagic\\Pictures\\Saved Pictures
 pathToEmulator = "/snap/bin/visualboyadvance-m"
 
 
 def callBack(event):
-    print(event.widget.curselection())
-    #selection = lb.curselection()
-    #print(selection)
+
+    index = event.widget.curselection()
+    selectedItem = event.widget.get(index)
+    command = [pathToEmulator, "--fullscreen", selectedItem]
+    subprocess.call(command)
 
 class MyGUI:
+
     def __init__(self):
 
          root = tk.Tk()
-#        root.configure(bg='')
-         root.title("")
+#        root.configure(bg=" ")
          root.overrideredirect(True)
          root.eval('tk::PlaceWindow . center')
 
