@@ -12,7 +12,7 @@ def callBack(event):
 
     index = event.widget.curselection()
     selectedItem = event.widget.get(index)
-    command = [pathToEmulator, "--fullscreen", selectedItem]
+    command = [pathToEmulator, "--fullscreen", selectedItem, "2/dev/null"]
     subprocess.call(command)
 
 class MyGUI:
@@ -20,8 +20,9 @@ class MyGUI:
     def __init__(self):
 
          root = tk.Tk()
+         root.title("GameList")
 #        root.configure(bg=" ")
-         root.overrideredirect(True)
+         #root.overrideredirect(True)
          root.eval('tk::PlaceWindow . center')
 
         #font_path = os.getcwd() + "/avenir-heavy_QYJA9/Avenir Heavy.ttf"
