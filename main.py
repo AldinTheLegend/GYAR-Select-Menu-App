@@ -92,8 +92,8 @@ class App(tk.Tk):
 
     def addButtonsToBackground(self, background_label):
         pathToGames = "/home/raspberry/Downloads/ROMGames"
-        #games = os.listdir(pathToGames)
-        games = ('bruh', 'pokemen')
+        games = os.listdir(pathToGames)
+        #games = ('bruh', 'pokemen')
         rows = 3  # Ceiling division to get the number of rows
         columns = 7
         for i in range(columns):
@@ -110,7 +110,7 @@ class App(tk.Tk):
             #gameArt = ImageTk.PhotoImage(self.getGameArtWork(game=game))
             self.pic = self.getGameArtWork()
 
-            button = tk.Button(button_frame, height=180, width=200, image=self.pic, relief=RIDGE, bd=5)
+            button = tk.Button(button_frame, height=180, width=200, image=self.pic, relief=RIDGE, bd=5, command=lambda: self.startGame(game))
             button.image = self.pic
             button.pack()
     
@@ -127,7 +127,10 @@ class App(tk.Tk):
         self.pic = ImageTk.PhotoImage(originalImage)
         return self.pic
 
-
+    def startGame(self, game):
+        pathToEmulator = "/snap/bin/visualboyadvance-m"
+        command = [pathToEmulator, "--fullscreen", game] #"2/dev/null"]
+        subprocess.call(command)
     def center_window(self, width, height):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
