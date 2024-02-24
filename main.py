@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
-#pathToGames = "/home/raspberry/Downloads/ROMGames" #C:\\Users\\aldin.jusufagic\\Pictures\\Saved Pictures
+ #C:\\Users\\aldin.jusufagic\\Pictures\\Saved Pictures
 #pathToEmulator = "/snap/bin/visualboyadvance-m"
 #games = []
 #     options = os.listdir(pathToGames)
@@ -21,23 +21,20 @@ from io import BytesIO
 #    subprocess.call(command)
 
 class App(tk.Tk):
+
+    background_path = 'bakcground.png'
+
     def __init__(self):
         super().__init__()
         self.title("Ga,eList")
         self.initialize()
 
     def initialize(self):
-        height = 270
-        width = 308
+        height = 310
+        width = 425
         #self.overrideredirect(True)
         self.center_window(width=width, height=height)
-
-        background_path = 'bakcground.png'
-
-        original_img = Image.open(background_path)
-        self.image = ImageTk.PhotoImage(original_img)
-    
-        background_label = tk.Label(self, image=self.image)
+        background_label = self.addBackground(width=width, height=height)
 
         #content = tk.Frame(self)
         gamesIcon = tk.Button(background_label, text='Games', height=8, width=20, command=lambda: self.clear(windowIndex=2))
@@ -70,11 +67,21 @@ class App(tk.Tk):
         self.center_window(1920, 1080)
         
         self.addBackgroundToGamesWindow()
-        
-    def addBackgroundToGamesWindow(self):
-        background_path = 'bakcground.png'
+    
+    def addBackground(self, width, height):
+        original_img = Image.open(self.background_path)
+        x1 = (original_img.width/2)-(width/2)
+        y1 = (original_img.height/2)-(height/2)
+        x2 = (original_img.width/2)-(width/2)
+        y2 = (original_img.height/2)-(height/2)
+        area = (x1, y1, x2, y2)
+        cropped_img = original_img.crop(area)
 
-        original_img = Image.open(background_path)
+        self.image = ImageTk.PhotoImage(cropped_img)
+        return tk.Label(self, self.image)
+
+    def addBackgroundToGamesWindow(self):
+        original_img = Image.open(self.background_path)
         self.image = ImageTk.PhotoImage(original_img)
     
         background_label = tk.Label(self, image=self.image)
@@ -82,7 +89,8 @@ class App(tk.Tk):
         self.addButtonsToBackground(background_label=background_label)
 
     def addButtonsToBackground(self, background_label):
-        games = ["Pokemon FireRed", "Super Mario Bros.", "Pokemon LeafGreen", "Tetris", "The Legend Of Zelda", "sex", "sju"]
+        pathToGames = "/home/raspberry/Downloads/ROMGames"
+        games = os.listdir(pathToGames)
 
         rows = 3  # Ceiling division to get the number of rows
         columns = 7
@@ -101,7 +109,7 @@ class App(tk.Tk):
             self.pic = self.getGameArtWork()
 
             button = tk.Button(button_frame, height=180, width=200, image=self.pic, relief=RIDGE, bd=5)
-            button.image = self.pic  
+            button.image = self.pic
             button.pack()
     
             game_label = tk.Label(button_frame, text=game, background="#222222", foreground="white")  # skapa text under knappar
