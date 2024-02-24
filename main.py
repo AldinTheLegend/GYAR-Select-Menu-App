@@ -69,16 +69,18 @@ class App(tk.Tk):
         self.addBackgroundToGamesWindow()
     
     def addBackground(self, width, height):
+        
         original_img = Image.open(self.background_path)
-        x1 = (original_img.width/2)-(width/2)
-        y1 = (original_img.height/2)-(height/2)
-        x2 = (original_img.width/2)-(width/2)
-        y2 = (original_img.height/2)-(height/2)
-        area = (x1, y1, x2, y2)
-        cropped_img = original_img.crop(area)
+        x1 = (original_img.width/2) - (width/2)
+        y1 = (original_img.height/2) - (height/2)
+        x2 = (original_img.width/2) + (width/2)
+        y2 = (original_img.height/2) + (height/2)
 
-        self.image = ImageTk.PhotoImage(cropped_img)
-        return tk.Label(self, self.image)
+        cropped_image = original_img.crop((x1, y1, x2, y2))
+
+        self.image = ImageTk.PhotoImage(cropped_image)
+    
+        return tk.Label(self, image=self.image)
 
     def addBackgroundToGamesWindow(self):
         original_img = Image.open(self.background_path)
@@ -90,8 +92,8 @@ class App(tk.Tk):
 
     def addButtonsToBackground(self, background_label):
         pathToGames = "/home/raspberry/Downloads/ROMGames"
-        games = os.listdir(pathToGames)
-
+        #games = os.listdir(pathToGames)
+        games = ('bruh', 'pokemen')
         rows = 3  # Ceiling division to get the number of rows
         columns = 7
         for i in range(columns):
